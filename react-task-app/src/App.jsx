@@ -17,6 +17,12 @@ function App() {
 
     }
   );
+  // Handle Input
+
+  const handleChange = (e) => {
+    const [name , value ,type,checked] = e.target;
+    setTask({ ...task , [name]: type === "checkbox" ? checked : value})
+  }
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
