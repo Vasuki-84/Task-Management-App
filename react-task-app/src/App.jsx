@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 
 function App() {
+
+  const[tasks,setTasks] = useState([]);
+
+  // form is set as object form
+  const[form,setForm]=(
+    {
+      id: "",
+      title:"",
+      description: "",
+      assignment: "",
+      dueDate: "",
+      isCompleted: false
+
+    }
+  );
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-bold mb-6 text-center">
