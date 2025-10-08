@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
 function App() {
-
+// overall datas from API
   const[tasks,setTasks] = useState([]);
 
-  // form is set as object form
-  const[form,setForm]=(
+  // form is set as object and key form
+  // add & changes in task
+  const[task,setTask]=useState(
     {
       id: "",
       title:"",
@@ -39,7 +40,9 @@ function App() {
         <label className="block mb-3">
         <input type="checkbox" className="mr-2 " />Completed</label>
 
-        <button className="bg-violet-500 text-white px-4 py-2 rounded  mr-2 w-full">submit</button>
+        <button className="bg-violet-500 text-white px-4 py-2 rounded  mr-2 w-full">
+         { task.id ? "Update task" : "Add task" }
+        </button>
       </form>
     </div>
   );
