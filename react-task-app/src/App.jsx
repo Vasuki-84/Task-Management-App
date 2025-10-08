@@ -24,6 +24,19 @@ function App() {
     setTask({ ...task , [name]: type === "checkbox" ? checked : value})
   }
 
+  //  Add / update function or POST function 
+  const handleSubmit = (e) => {
+    e.preventDefault();  // prevent from page reload 
+  }
+  if(task.id) {
+    // update logic
+  }else{
+    // create task  using rest operator & takes shallow copy
+    const newTask = {...task};
+    delete newTask.id;  // delete default id to create new id
+   }
+
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-bold mb-6 text-center">
