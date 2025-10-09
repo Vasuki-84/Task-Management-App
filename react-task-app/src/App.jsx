@@ -34,14 +34,14 @@ function App() {
     });
   };
 
-  useEffect( () => {
+  useEffect(() => {
     getTasks();
-  } ,[])
+  }, []);
 
-  // get method 
-const getTasks = () => {
-  axios.get(API).then((res) => setTasks(res.data));
-}
+  // get method
+  const getTasks = () => {
+    axios.get(API).then((res) => setTasks(res.data));
+  };
 
   //  Add / update function or POST function
   const handleSubmit = (e) => {
@@ -54,7 +54,7 @@ const getTasks = () => {
       const newTask = { ...task };
       delete newTask.id; // delete default id to create new id
       axios.post(API, newTask).then(() => {
-       getTasks();
+        getTasks();
         clearForm();
       });
     }
@@ -122,20 +122,39 @@ const getTasks = () => {
       </form>
 
       {/* Added tasks in UI */}
-      <div>
-        {
-        tasks.length === 0 ? (
+      <div className="mt-6 max-w-2xl mx-auto">
+        {tasks.length === 0 ? (
           <p className="text-center text-gray-500 ">No tasks Added</p>
-        ) : ( tasks.map(data => (
-          <div key={data.id}>
-            <div>
-              <h2>{data.title}</h2>
-              <p>{data.description}</p>
-              <p>{data.assignment} - {data.dueDate}</p>
+        ) : (
+          tasks.map((data) => (
+            <div
+              key={data.id}
+              className="bg-white p-4 mb-2 rounded shadow flex justify-between "
+            >
+              <div>
+                <h2 className="flex items-center gap-4 font-semibold text-lg ">
+                  {data.title}{" "}
+                  {data.isCompleted && (
+                    <span className="text-green-500 text-sm ">✔️DONE</span>
+                  )}
+                </h2>
+                <p className="text-sm text-gray-500">{data.description}</p>
+                <p className="text-">
+                  {data.assignment} - {data.dueDate}
+                </p>
+              </div>
+              {/* edit / delete button */}
+              <div className="space-x-2">
+                <button className="bg-yellow-300 text-black px-2 py-1 font-semibold rounded">
+                  Edit
+                </button>
+                <button className="bg-black text-white px-2 py-1 font-semibold rounded ">
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
-        )))
-      }
+          ))
+        )}
       </div>
     </div>
   );
