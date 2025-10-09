@@ -18,26 +18,38 @@ function App() {
   });
   // Handle Input
 
-    const handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setTask({ ...task, [name]: type === "checkbox" ? checked : value });
-  }
+  };
+
+  const clearForm = () => {
+    setTask({
+      id: "",
+      title: "",
+      description: "",
+      assignment: "",
+      dueDate: "",
+      isCompleted: false,
+    });
+  };
 
   //  Add / update function or POST function
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent from page reload
-  
-  if (task.id) {
-    // update logic
-  } else {
-    // create task  using rest operator & takes shallow copy
-    const newTask = { ...task };
-    delete newTask.id; // delete default id to create new id
-    axios.post(API, newTask).then(() => {
-     alert("created")
-    })
-  }
-  }
+
+    if (task.id) {
+      // update logic
+    } else {
+      // create task  using rest operator & takes shallow copy
+      const newTask = { ...task };
+      delete newTask.id; // delete default id to create new id
+      axios.post(API, newTask).then(() => {
+       
+        clearForm();
+      });
+    }
+  };
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -90,7 +102,7 @@ function App() {
             className="mr-2 "
             name="isCompleted"
             checked={task.isCompleted}
-             onChange={handleChange}
+            onChange={handleChange}
           />
           Completed
         </label>
