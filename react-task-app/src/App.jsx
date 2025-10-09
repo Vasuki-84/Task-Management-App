@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 const API = "http://localhost:5000/tasks";
 
@@ -34,6 +34,15 @@ function App() {
     });
   };
 
+  useEffect( () => {
+    getTasks();
+  } ,[])
+
+  // get method 
+const getTasks = () => {
+  axios.get(API).then((res) => setTasks(res.data));
+}
+
   //  Add / update function or POST function
   const handleSubmit = (e) => {
     e.preventDefault(); // prevent from page reload
@@ -45,7 +54,7 @@ function App() {
       const newTask = { ...task };
       delete newTask.id; // delete default id to create new id
       axios.post(API, newTask).then(() => {
-       
+       getTasks();
         clearForm();
       });
     }
@@ -111,6 +120,23 @@ function App() {
           {task.id ? "Update task" : "Add task"}
         </button>
       </form>
+
+      {/* Added tasks in UI */}
+      <div>
+        {
+        tasks.length === 0 ? (
+          <p className="text-center text-gray-500 ">No tasks Added</p>
+        ) : ( tasks.map(data => (
+          <div key={data.id}>
+            <div>
+              <h2>{data.title}</h2>
+              <p>{data.description}</p>
+              <p>{data.assignment} - {data.dueDate}</p>
+            </div>
+          </div>
+        )))
+      }
+      </div>
     </div>
   );
 }
