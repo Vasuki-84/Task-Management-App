@@ -121,6 +121,9 @@ function App() {
         </button>
       </form>
 
+      {/* error when no task is added  */}
+   
+
       {/* Added tasks in UI */}
       <div className="mt-6 max-w-2xl mx-auto">
         {tasks.length === 0 ? (
@@ -143,6 +146,7 @@ function App() {
                   {data.assignment} - {data.dueDate}
                 </p>
               </div>
+
               {/* edit / delete button */}
               <div className="space-x-2">
                 <button className="bg-yellow-300 text-black px-2 py-1 font-semibold rounded">
@@ -157,6 +161,7 @@ function App() {
         )}
       </div>
     </div>
+
   );
 }
 
