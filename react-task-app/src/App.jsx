@@ -51,11 +51,11 @@ function App() {
 
     if (task.id) {
       // update logic
-       axios.put(`${API}/${task.id}`, task).then(() => {
+      axios.put(`${API}/${task.id}`, task).then(() => {
         alert("Task Updated");
         getTasks();
         clearForm();
-      })
+      });
     } else {
       // create task  using rest operator & takes shallow copy
       const newTask = { ...task };
@@ -68,10 +68,17 @@ function App() {
   };
 
   // update task
-   const updateTask = (data) => {
-      setTask(data);
-  }
+  const updateTask = (data) => {
+    setTask(data);
+  };
 
+  // delete task
+  const deleteTask = (id) => {
+    axios.delete(`${API}/${id}`).then(() => {
+      alert("Task Deleted");
+      getTasks();
+    });
+  };
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -134,9 +141,6 @@ function App() {
         </button>
       </form>
 
-      
-   
-
       {/* Added tasks in UI */}
       <div className="mt-6 max-w-2xl mx-auto">
         {tasks.length === 0 ? (
@@ -162,10 +166,13 @@ function App() {
 
               {/* edit / delete button */}
               <div className="space-x-2">
-                <button className="bg-yellow-300 text-black px-2 py-1 font-semibold rounded"  onClick={() => updateTask(data)}>
+                <button
+                  className="bg-yellow-300 text-black px-2 py-1 font-semibold rounded"
+                  onClick={() => updateTask(data)}
+                >
                   Edit
                 </button>
-                <button className="bg-black text-white px-2 py-1 font-semibold rounded ">
+                <button className="bg-black text-white px-2 py-1 font-semibold rounded "  onClick={() => deleteTask(data.id)}>
                   Delete
                 </button>
               </div>
@@ -174,7 +181,6 @@ function App() {
         )}
       </div>
     </div>
-
   );
 }
 
