@@ -16,13 +16,14 @@ function App() {
     dueDate: "",
     isCompleted: false,
   });
-  // Handle Input
 
+  // Handle Input
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setTask({ ...task, [name]: type === "checkbox" ? checked : value });
   };
 
+  // clear form
   const clearForm = () => {
     setTask({
       id: "",
@@ -34,6 +35,7 @@ function App() {
     });
   };
 
+  // display tasks in UI
   useEffect(() => {
     getTasks();
   }, []);
@@ -49,6 +51,11 @@ function App() {
 
     if (task.id) {
       // update logic
+       axios.put(`${API}/${task.id}`, task).then(() => {
+        alert("Task Updated");
+        getTasks();
+        clearForm();
+      })
     } else {
       // create task  using rest operator & takes shallow copy
       const newTask = { ...task };
@@ -59,6 +66,12 @@ function App() {
       });
     }
   };
+
+  // update task
+   const updateTask = (data) => {
+      setTask(data);
+  }
+
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
@@ -121,7 +134,7 @@ function App() {
         </button>
       </form>
 
-      {/* error when no task is added  */}
+      
    
 
       {/* Added tasks in UI */}
@@ -149,7 +162,7 @@ function App() {
 
               {/* edit / delete button */}
               <div className="space-x-2">
-                <button className="bg-yellow-300 text-black px-2 py-1 font-semibold rounded">
+                <button className="bg-yellow-300 text-black px-2 py-1 font-semibold rounded"  onClick={() => updateTask(data)}>
                   Edit
                 </button>
                 <button className="bg-black text-white px-2 py-1 font-semibold rounded ">
